@@ -1,0 +1,135 @@
+Names: Alex Dai
+utlns: zdai03
+
+Answer the questions below, and submit your answers under the assignment
+"gerp Design Checkoff" on Gradescope. You must sign up for a design checkoff
+slot with a TA to discuss your provided answers (see spec for sign up link).
+Make sure to submit this file *prior* to your design checkoff.
+
+For each question, give as much detail as you feel is necessary.
+
+1. What classes and structs will you implement for your program? For each class,
+   provide a list of public functions of that class; for each struct, provide a
+   list of member variables.
+
+Answer:
+1. the FStree class and DirNode class
+2. A WordHashTable class that index and store words inside the file.
+3. A gerp class to implement the command loop and output search result to the 
+   output file.
+   - a constructor
+   - a destructor if needed
+   - a run function that can be called from main.cpp
+
+
+2. Describe the index that you will build for querying. What specific data
+   structures will you use to build this index? *Important*: Bring an
+   accompanying drawing of your index structure when you come to your checkoff.
+
+Answer:
+a hash table that stores the inverted index of each unique word that appears in
+files. Each component (index) in hash table contains a list specifying the
+occurrences of each word, including the line number, filename, and file path.
+
+3. To use your index, you will use something for lookup (the key) and you will
+   get some associated data back (the value). What are the C++ *types* of your
+   index's key and value? Examples of valid types: int, string,
+   vector<string>, vector<list<string>>; you may also define custom types using
+   structs/classes, e.g., Animal and vector<Animal> are valid types if you
+   define a struct/class named Animal. If your key/value types involve custom
+   classes/structs, they should be included in your answer to question #1.
+                
+Answer:
+
+   Key type: int
+      int converted by hash function of words that the user's searching
+   Value type: list<string>
+      list of string indicating the file path and line number   
+
+   HashTable would be: vector<list<string>>   
+
+4. Explain what a collision is versus having multiple lines associated with 
+   a particular word. Write (and/or draw) out an example of when a 
+   collision occurs. Write (and/or draw) out an example of when multiple 
+   lines associated with a single word. 
+
+Answer: 
+   collision occurs when two words have exactly the same hash value, meaning
+   they will be stored in the same slot in the hash table.
+   having multiple lines associated with a single word is kind of similar
+   to collision. The keys (words) collide, but their inherent value (line
+   number, filename, filepath) differ from one another, thus will be stored
+   seperately in a list.
+
+5. What do you expect the *space* complexity of your index will be? How many
+   times will a single line be stored according to your data structures?
+
+Answer:
+   a single line will be stored its number of words times. 
+
+   One index will take up the space of: 
+   (its number of occurrence)*(average number of words in each line)
+
+   Total space would be:
+   (number of unqiue words)*(space used by one index)
+
+   (Could save up more spaces by dynamically allocating memories and using
+   pointers and addresses)
+
+
+6. What is the time complexity of *building* your index? If you refer to some
+   variable, be sure to specify what the variable refers to, e.g., in "O(n)",
+   state explicitly what "n" is.
+
+Answer:
+   - access each file in the directory: O(n), n = number of files
+   - store each word in the file to the HashTable: O(n), n = number of Words
+   - Total time = O(n)*O(n) = O(n^2)
+                
+7. What is the time complexity of *using* your index for lookup? As above,
+   be specific about variables you use.
+
+Answer:
+   - search the word in hash table takes O(1) time
+   - if a single word repeatedly occur too many times, it takes O(n) (n = number
+     of occurence) time to iterate through the list of values associated with
+     that word.
+   - Total = O(n)
+   
+
+8. How will you handle case-sensitive search?
+   What is the time complexity (should be close to O(1))?
+
+Answer:
+
+
+9. How will you handle case-insensitive search?
+   What is the time complexity (should be close to O(1))?
+
+Answer:
+
+10. How are you handling duplicate words within a line? Consider these two example 
+   lines: 
+
+      (i) the cat and the dog 
+      (ii) the cat and THE dog 
+
+   If a user does a case sensitive query on line (i) it should report 'the' only 
+   once by showing the line only once in the output. How will you do this? 
+
+   If a user does a case insensitive query on line (ii) it should report 'the' 
+   only once by showing the line only once in the output. How will you do this? 
+
+Answer:
+
+11. How will you test your implementation and what specific evidence of testing
+    will you submit?
+
+Answer:
+   diff, unit test, input test files.
+
+12. What is your schedule for completing this assignment? Include specific dates
+    and the tasks that you would like to accomplish by each date. Do not forget
+    testing!
+
+Answer: 
