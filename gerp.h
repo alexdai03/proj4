@@ -27,6 +27,8 @@
 #define GERP_H
 
 #include "wordTable.h"
+#include "FSTree.h"
+#include "DirNode.h"
 
 #include <string>
 #include <iostream>
@@ -45,9 +47,18 @@ class Gerp
 
   private:
 
+    template<typename streamtype>
+    void open_or_die(streamtype &stream, string file_name);
+    void traverseDirectory(string directory);
+    void recursive_traversal(DirNode *curr, string path);
+    void fill_table(string infile, string file_path);
+    void implement_command(istream &iss, const string &output);
+ 
+
+
     // should it be a pointer?
     WordTable *table;
-}
+};
 
 
 

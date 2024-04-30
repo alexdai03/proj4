@@ -12,6 +12,12 @@
 ## At the end, you can delete this comment!
 ## 
 
+MAKEFLAGS += -L
+
+CXX      = clang++
+CXXFLAGS = -g3 -Wall -Wextra -Wpedantic -Wshadow
+LDFLAGS  = -g3 
+
 ##
 ## Here is a special rule that removes all .o files besides the provided ones 
 ## (DirNode.o and FSTree.o), all temporary files (ending with ~), and 
@@ -23,11 +29,20 @@
 ## You do not need to modify or further comment this rule!
 ##
 
-processing.o: processing.cpp processing.h FSTree.h DirNode.h 
-	${CXX} ${CXXFLAGS} -c processing.cpp
+gerp: main.o wordTable.o gerp.o FSTree.o DirNode.o
+	$(CXX) $(CXXFLAGS) $^ -o gerp
 
 unit_test: unit_test_driver.o DirNode.o FSTree.o processing.o
 	${CXX} ${CXXFLAGS} $^
+
+wordTable.o: wordTable.cpp wordTable.h
+	${CXX} ${CXXFLAGS} -c wordTable.cpp
+
+gerp.o: gerp.cpp gerp.h wordTable.h FSTree.h DirNode.h
+	${CXX} ${CXXFLAGS} -c gerp.cpp
+
+processing.o: processing.cpp processing.h FSTree.h DirNode.h
+	${CXX} ${CXXFLAGS} -c processing.cpp
 
 clean:
 	@find . -type f \( \
